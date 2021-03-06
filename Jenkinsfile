@@ -10,7 +10,17 @@ pipeline {
 			rm -rf eco-app
 		'"'''
             }
-        }    
+        }
+	    
+	stage('Cleaning Up previous docker instance') {
+            steps {
+                echo 'Undeploying previous version'
+		sh '''ssh root@c2.exceedcourses.com bash -c "'
+			docker stop spring-container
+			docker rm spring-container
+		'"'''
+            }
+        }
 	    
         stage('Cloning Repository') {
             steps {
@@ -33,16 +43,6 @@ pipeline {
 			docker container run -d --name=spring-container -p 8080:8080 spring-app
 		'"'''
 		   
-            }
-        }
-        
-	stage('Cleaning Up previous docker instance') {
-            steps {
-                echo 'Undeploying previous version'
-		sh '''ssh root@c2.exceedcourses.com bash -c "'
-			docker stop spring-container
-			docker rm spring-container
-		'"'''
             }
         }    
 	    
