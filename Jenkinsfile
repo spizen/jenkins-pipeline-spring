@@ -94,7 +94,7 @@ pipeline {
     @NonCPS
     def echo_all(list) {
         list.each { item ->
-            echo "Hello ${item}""
+            echo "Hello ${item}"
 	    sh '''ssh root@${item} bash -c "'
 		  rm -rf eco-app
 	       '"'''
