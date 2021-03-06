@@ -17,11 +17,19 @@ pipeline {
 	    
 	stage('Cleaning Up previous docker instance') {
             steps {
-                echo 'Undeploying previous version'
-		sh '''ssh root@${server} bash -c "'
-			docker stop spring-container
-			docker rm spring-container
-		'"'''
+		
+		script {
+		  try {
+			echo 'Undeploying previous version'
+			sh '''ssh root@${server} bash -c "'
+				docker stop spring-container
+				docker rm spring-container
+			'"'''
+		  } catch (Exception e) {
+		      echo 'Nothing to remove'
+		  }
+		}    
+                
             }
         }
 	    
@@ -51,12 +59,20 @@ pipeline {
 	    
 	stage('Cleaning Up previous docker instance pre-deployment verification') {
             steps {
-                echo 'Undeploying previous version'
-		sh '''ssh root@${server} bash -c "'
-			docker stop spring-container
-			docker rm spring-container
-		'"'''
-            }
+
+		script {
+		  try {
+			echo 'Undeploying previous version'
+			sh '''ssh root@${server} bash -c "'
+				docker stop spring-container
+				docker rm spring-container
+			'"'''
+		  } catch (Exception e) {
+		      echo 'Nothing to remove'
+		  }
+		}    
+	    
+	    }
         }
 	    
         stage('Running the Application') {
