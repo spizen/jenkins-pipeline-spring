@@ -95,12 +95,12 @@ pipeline {
     
     }
 	
+	
+}
+
     @NonCPS
     def echo_all(list) {
         list.each { item ->
             echo "Hello ${item}"
         }
     }
-	
-	
-}
