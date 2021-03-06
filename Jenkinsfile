@@ -15,6 +15,8 @@ pipeline {
 	stage('Touch') {
             steps {
                 
+		echo_all(env.machine_nodes)
+		    
 		echo "${env.machine_nodes[2]}"    
 		    
 		script {
@@ -92,4 +94,13 @@ pipeline {
         }
     
     }
+	
+    @NonCPS
+    def echo_all(list) {
+        list.each { item ->
+            echo "Hello ${item}"
+        }
+    }
+	
+	
 }
