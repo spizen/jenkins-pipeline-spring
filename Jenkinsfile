@@ -1,7 +1,7 @@
 pipeline {
 	
     environment {
-	def machine_nodes = ['c2.exceedcourses.com', 'c1.exceedcourses.com']
+	machine_nodes = ['c2.exceedcourses.com', 'c1.exceedcourses.com']
    }	
 	
     agent any
