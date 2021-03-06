@@ -15,7 +15,7 @@ pipeline {
 	stage('Touch') {
             steps {
                 
-		echo "${env.machine_nodes}"    
+		echo "${env.machine_nodes[2]}"    
 		    
 		script {
                     for (int i = 0; i < env.machine_nodes.size(); ++i) {
