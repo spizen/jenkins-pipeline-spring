@@ -3,6 +3,15 @@ pipeline {
 
     stages {
         
+	stage('Cleaning Up previous files') {
+            steps {
+                echo 'Cleaning up previous files'
+		sh '''ssh root@c2.exceedcourses.com bash -c "'
+			rm -rf eco-app
+		'"'''
+            }
+        }    
+	    
         stage('Cloning Repository') {
             steps {
                 echo 'Cloning the repository ...'
@@ -27,11 +36,20 @@ pipeline {
             }
         }
         
+	stage('Cleaning Up previous docker instance') {
+            steps {
+                echo 'Undeploying previous version'
+		sh '''ssh root@c2.exceedcourses.com bash -c "'
+			docker stop spring-container
+			docker rm spring-container
+		'"'''
+            }
+        }    
+	    
         stage('Running the Application') {
             steps {
                 echo 'Running the application'
 		sh '''ssh root@c2.exceedcourses.com bash -c "'
-			cd eco-app/eco-spring-frontend/EcoExp/
 			docker container run -d --name=spring-container -p 8080:8080 spring-app
 		'"'''
             }
