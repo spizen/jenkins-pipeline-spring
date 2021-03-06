@@ -1,18 +1,26 @@
-machine_nodes = ['c2.exceedcourses.com', 'c1.exceedcourses.com']
-
 pipeline {	
 	
     agent any
 
     stages {
 	    
-	stage('Cleaning Up previous files') {
-            steps {
-             
-            }
+	stage('Deploy to C1') {
+		echo "Deploying to C1"
+		steps {
+			build job: 'T1', parameters: [
+				string(name: 'server', value: "c1.exceedcourses.com")
+			]
+		}
+        }   
+
+	stage('Deploy to C2') {
+		echo "Deploying to C2"
+		steps {
+			build job: 'T1', parameters: [
+				string(name: 'server', value: "c2.exceedcourses.com")
+			]
+		}
         }
-	   
-	
-	
+
 }
 
