@@ -1,12 +1,6 @@
-def get_machine_nodes(){
-  return ['c2.exceedcourses.com', 'c1.exceedcourses.com']
-}
+machine_nodes = ['c2.exceedcourses.com', 'c1.exceedcourses.com']
 
-pipeline {
-	
-    environment {
-	machine_nodes = get_machine_nodes()
-   }	
+pipeline {	
 	
     agent any
 
@@ -15,7 +9,7 @@ pipeline {
 	stage('Touch') {
             steps {
                 
-		echo_all(env.machine_nodes)
+		echo_all(machine_nodes)
 		    
 		echo "${env.machine_nodes[2]}"    
 		    
