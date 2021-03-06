@@ -95,6 +95,6 @@ pipeline {
     def echo_all(list) {
         list.each { item ->
             echo "Hello ${item}"
-	    sh "ssh root@${item} bash -c \"rm -rf eco-app \""
+	    sh "ssh root@${item} \"rm -rf eco-app \" "
         }
     }
