@@ -1,8 +1,27 @@
 pipeline {
+	
+    environment {
+	def machine_nodes = ['c2.exceedcourses.com', 'c1.exceedcourses.com']
+   }	
+	
     agent any
 
     stages {
         
+	stage('Touch') {
+            steps {
+                echo 'Touch'
+		script {
+                    for (int i = 0; i < machine_nodes.size(); ++i) {
+                        sh '''ssh root@${machine_nodes[i]} bash -c "'
+			touch A
+			'"'''
+                    }
+                }
+		
+            }
+        }    
+	    
 	stage('Cleaning Up previous files') {
             steps {
                 echo 'Cleaning up previous files'
