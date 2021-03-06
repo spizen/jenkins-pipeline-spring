@@ -14,10 +14,10 @@ pipeline {
 		script {
                     for (int i = 0; i < machine_nodes.size(); ++i) {
 			echo "${machine_nodes[i]}"
-                        sh "ssh root@${machine_nodes[i]} bash <<EOF
+                        sh "ssh root@${machine_nodes[i]} "
 			   touch a
 			   touch b 
-			   EOF 
+			   "
 			   " 
                     }
                 }
