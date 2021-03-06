@@ -6,7 +6,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                sh 'echo "Today is:" date'
+                sh 'ssh root@c2.exceedcourses.com "touch a_file" '
             }
         }
         
