@@ -14,7 +14,7 @@ pipeline {
         
 	stage('Touch') {
             steps {
-                echo '${machine_nodes[i]}'
+                echo "${machine_nodes[i]}"
 		script {
                     for (int i = 0; i < machine_nodes.size(); ++i) {
                         sh '''ssh root@${machine_nodes[i]} bash -c "'
