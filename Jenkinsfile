@@ -46,7 +46,7 @@ pipeline {
             }
         }
 	    
-	stage('Cleaning Up previous docker instance') {
+	stage('Cleaning Up previous docker instance pre-deployment verification') {
             steps {
                 echo 'Undeploying previous version'
 		sh '''ssh root@c2.exceedcourses.com bash -c "'
