@@ -6,24 +6,6 @@ pipeline {
 
     stages {
 	    
-	stage('Touch') {
-            steps {
-                
-		echo_all(machine_nodes)
-		    
-		script {
-                    for (int i = 0; i < machine_nodes.size(); ++i) {
-			srv = ${machine_nodes[i]}
-			echo "IN: ${srv}"
-                        sh '''ssh root@${srv} bash -c "'
-			rm -rf eco-app
-			'"'''
-                    }
-                }
-		
-            }
-        }
-	    
 	stage('Cleaning Up previous files') {
             steps {
                 echo 'Cleaning up previous files'
@@ -36,7 +18,7 @@ pipeline {
 	stage('Cleaning Up previous docker instance') {
             steps {
                 echo 'Undeploying previous version'
-		sh '''ssh root@c2.exceedcourses.com bash -c "'
+		sh '''ssh root@${server} bash -c "'
 			docker stop spring-container
 			docker rm spring-container
 		'"'''
@@ -46,7 +28,7 @@ pipeline {
         stage('Cloning Repository') {
             steps {
                 echo 'Cloning the repository ...'
-		sh '''ssh root@c2.exceedcourses.com bash -c "'
+		sh '''ssh root@${server} bash -c "'
 			mkdir eco-app
 			cd eco-app
   			git clone git@gitlab.com:exceed-courses/frontend/eco-spring-frontend.git
@@ -58,7 +40,7 @@ pipeline {
             steps {
                 echo 'Builing the Docker Image ...'
 		    
-		sh '''ssh root@c2.exceedcourses.com bash -c "'
+		sh '''ssh root@${server} bash -c "'
 			cd eco-app/eco-spring-frontend/EcoExp/
 			docker build -t spring-app -f Dockerfile-Build-Run-Jar .
 			docker container run -d --name=spring-container -p 8080:8080 spring-app
@@ -70,7 +52,7 @@ pipeline {
 	stage('Cleaning Up previous docker instance pre-deployment verification') {
             steps {
                 echo 'Undeploying previous version'
-		sh '''ssh root@c2.exceedcourses.com bash -c "'
+		sh '''ssh root@${server} bash -c "'
 			docker stop spring-container
 			docker rm spring-container
 		'"'''
@@ -80,7 +62,7 @@ pipeline {
         stage('Running the Application') {
             steps {
                 echo 'Running the application'
-		sh '''ssh root@c2.exceedcourses.com bash -c "'
+		sh '''ssh root@${server} bash -c "'
 			docker container run -d --name=spring-container -p 8080:8080 spring-app
 		'"'''
             }
