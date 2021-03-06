@@ -3,30 +3,37 @@ pipeline {
 
     stages {
         
-        stage('Build') {
+        stage('Cloning Repository') {
             steps {
-                echo 'Building..'
-                sh 'ssh root@c2.exceedcourses.com "touch a_file" '
+                echo 'Cloning the repository ...'
+		sh '''ssh root@c2.exceedcourses.com bash -c "'
+			mkdir eco-app
+			cd eco-app
+  			git clone git@gitlab.com:exceed-courses/frontend/eco-spring-frontend.git
+		'"'''
             }
         }
         
-        stage('Test') {
+        stage('Builing the Docker Image') {
             steps {
-                echo 'Testing..'
+                echo 'Builing the Docker Image ...'
 		    
 		sh '''ssh root@c2.exceedcourses.com bash -c "'
-  			touch b_file
-			mkdir eco-app
-			cd eco-app
-  			touch c_file
+			cd eco-app/eco-spring-frontend/EcoExp/
+			docker build -t spring-app -f Dockerfile-Build-Run-Jar .
+			docker container run -d --name=spring-container -p 8080:8080 spring-app
 		'"'''
 		   
             }
         }
         
-        stage('Deploy') {
+        stage('Running the Application') {
             steps {
-                echo 'Deploying....'
+                echo 'Running the application'
+		sh '''ssh root@c2.exceedcourses.com bash -c "'
+			cd eco-app/eco-spring-frontend/EcoExp/
+			docker container run -d --name=spring-container -p 8080:8080 spring-app
+		'"'''
             }
         }
     
