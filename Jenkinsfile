@@ -4,27 +4,12 @@ pipeline {
 	
     agent any
 
-    stages {
-        
-	stage('Touch') {
-            steps {
-                
-		echo_all(machine_nodes)
-		    
-		script {
-                    for (int i = 0; i < machine_nodes.size(); ++i) {
-			echo "${machine_nodes[i]}"
-                        sh "ssh root@${machine_nodes[i]} "touch a" " 
-                    }
-                }
-		
-            }
-        }    
+    stages {    
 	    
 	stage('Cleaning Up previous files') {
             steps {
                 echo 'Cleaning up previous files'
-		sh '''ssh root@c2.exceedcourses.com bash -c "'
+		sh '''ssh root@${server} bash -c "'
 			rm -rf eco-app
 		'"'''
             }
