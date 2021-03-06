@@ -1,0 +1,18 @@
+machine_nodes = ['c2.exceedcourses.com', 'c1.exceedcourses.com']
+
+pipeline {	
+	
+    agent any
+
+    stages {
+	    
+	stage('Cleaning Up previous files') {
+            steps {
+             
+            }
+        }
+	   
+	
+	
+}
+
