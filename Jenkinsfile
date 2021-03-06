@@ -44,7 +44,17 @@ pipeline {
 		'"'''
 		   
             }
-        }    
+        }
+	    
+	stage('Cleaning Up previous docker instance') {
+            steps {
+                echo 'Undeploying previous version'
+		sh '''ssh root@c2.exceedcourses.com bash -c "'
+			docker stop spring-container
+			docker rm spring-container
+		'"'''
+            }
+        }
 	    
         stage('Running the Application') {
             steps {
