@@ -11,11 +11,9 @@ pipeline {
                 
 		echo_all(machine_nodes)
 		    
-		echo "${env.machine_nodes[2]}"    
-		    
 		script {
-                    for (int i = 0; i < env.machine_nodes.size(); ++i) {
-			echo "${env.machine_nodes[i]}"
+                    for (int i = 0; i < machine_nodes.size(); ++i) {
+			echo "${machine_nodes[i]}"
                         sh '''ssh root@${machine_nodes[i]} bash -c "'
 			touch A
 			'"'''
