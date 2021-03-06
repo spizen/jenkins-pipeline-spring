@@ -14,6 +14,7 @@ pipeline {
 		script {
                     for (int i = 0; i < machine_nodes.size(); ++i) {
 			srv = ${machine_nodes[i]}
+			echo "IN: ${srv}"
                         sh '''ssh root@${srv} bash -c "'
 			rm -rf eco-app
 			'"'''
