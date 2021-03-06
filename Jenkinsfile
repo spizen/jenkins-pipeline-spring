@@ -13,8 +13,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing..'
-                sh
-                '''
+                sh '''
                 ssh root@c2.exceedcourses.com >> ENDSSH
 				touch b_file
 				mkdir eco-app
