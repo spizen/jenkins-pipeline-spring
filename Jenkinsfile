@@ -13,8 +13,8 @@ pipeline {
 		    
 		script {
                     for (int i = 0; i < machine_nodes.size(); ++i) {
-			echo "${machine_nodes[i]}"
-                        sh '''ssh root@\"${machine_nodes[i]}\" bash -c "'
+			srv = ${machine_nodes[i]}
+                        sh '''ssh root@${srv} bash -c "'
 			rm -rf eco-app
 			'"'''
                     }
