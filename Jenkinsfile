@@ -1,7 +1,11 @@
+def get_machine_nodes(){
+  return ['c2.exceedcourses.com', 'c1.exceedcourses.com']
+}
+
 pipeline {
 	
     environment {
-	machine_nodes = ['c2.exceedcourses.com', 'c1.exceedcourses.com']
+	machine_nodes = get_machine_nodes()
    }	
 	
     agent any
