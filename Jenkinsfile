@@ -95,5 +95,10 @@ pipeline {
     def echo_all(list) {
         list.each { item ->
             echo "Hello ${item}"
+	    srv = ${machine_nodes[i]}
+	    echo "IN: ${srv}"
+	    sh '''ssh root@${srv} bash -c "'
+		  rm -rf eco-app
+	       '"'''
         }
     }
